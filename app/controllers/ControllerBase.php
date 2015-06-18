@@ -7,8 +7,6 @@ class ControllerBase extends Controller
 
     protected function initialize()
     {
-        //$this->tag->prependTitle('board| ');
-        //$this->view->setTemplateAfter('main');
     }
 
     protected function forward($uri)
