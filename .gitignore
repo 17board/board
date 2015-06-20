@@ -4,3 +4,4 @@ cache/volt/*
 *~
 *.sublime-project
 *.sublime-workspace
+!.gitkeep

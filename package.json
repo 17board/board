@@ -1,0 +1,22 @@
+{
+  "name": "board",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {},
+  "devDependencies": {
+    "babelify": "^6.1.2",
+    "browserify": "^10.2.4",
+    "gulp": "^3.9.0",
+    "gulp-sass": "^2.0.1",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-uglify": "^1.2.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.2.2"
+  },
+  "dependencies": {
+    "lodash": "^3.9.3",
+    "materialize-css": "https://github.com/Dogfalo/materialize/tarball/v0.96.1",
+    "react": "^0.13.3"
+  }
+}
