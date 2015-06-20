@@ -1,0 +1,6 @@
+.DS_Store
+app/config/config.ini
+cache/volt/*
+*~
+*.sublime-project
+*.sublime-workspace
