@@ -7,6 +7,8 @@ class ControllerBase extends Controller
 
     protected function initialize()
     {
+        $this->result = array('errno'  => 0,
+                              'errmsg' => 'successful');
     }
 
     protected function forward($uri)
@@ -21,4 +23,7 @@ class ControllerBase extends Controller
     		)
     	);
     }
+
+    protected $requestParams = array();
+    protected $result        = array();
 }
