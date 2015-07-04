@@ -17,7 +17,7 @@ class FeatureController extends ControllerBase
     	}
 
     	$featureModel = new Feature();
-    	$res = $featureModel->addNewFeature($this->requestParams['uid'],
+    	$res = $featureModel->newFeature($this->requestParams['uid'],
     		                                $this->requestParams['projectid'],
     		                                $this->requestParams['content']);
     	if (!$res) {
@@ -46,7 +46,7 @@ class FeatureController extends ControllerBase
 
 	    $this->requestParams = array('projectid' => intval($projectId),
 	    							 'content'   => trim(strval($content)),
-	    							 'uid'       => $uid,
+	    							 'uid'       => intval($uid),
 	    					   );
     }
 

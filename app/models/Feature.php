@@ -16,7 +16,7 @@ class Feature extends Model {
 	/**
 	 * 创建一个新的feature。
 	 */
-	public function addNewFeature($createUid, $projectId, $content) {
+	public function newFeature($createUid, $projectId, $content) {
 		$this->project_id  = $projectId;
 		$this->deleted      = 0;
 		$this->sort        = 1;
