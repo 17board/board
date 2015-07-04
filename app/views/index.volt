@@ -8,5 +8,6 @@
 </head>
 <body>
     {{ javascript_include('js/app.js') }}
+    {{ content() }}
 </body>
 </html>
