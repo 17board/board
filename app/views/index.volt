@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html>
+  <head>
     <meta charset="UTF-8">
     <title>17board</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     {{ stylesheet_link('css/main.css') }}
-</head>
-<body>
+  </head>
+  <body>
+    <section id="board-app"></section>
     {{ javascript_include('js/app.js') }}
-    {{ content() }}
-</body>
+  </body>
 </html>

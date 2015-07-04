@@ -1,7 +1,12 @@
 import React from 'react';
-import Sidebar from './sidebar';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import BoardApp from './components/board-app';
+
+window.React = React;
+
+injectTapEventPlugin();
 
 React.render(
-  <Sidebar />,
-  document.body
+  <BoardApp />,
+  document.getElementById('board-app')
 );
