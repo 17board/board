@@ -7,7 +7,7 @@ CREATE TABLE `tbl_user` (
   `nickname` varchar(64) NOT NULL DEFAULT '' COMMENT '用户昵称，用于交流时的展现，允许任何可见字符',
   `email` varchar(256) NOT NULL DEFAULT '' COMMENT '用户邮件，用于找回密码使用',
   `avatar` varchar(256) NOT NULL DEFAULT '' COMMENT '用户头像',
-  `role` tinyint(2) unsigned NOT NULL DEFAULT 0 '' COMMENT '角色',
+  `role` tinyint(2) unsigned NOT NULL DEFAULT 0 COMMENT '角色',
   `privilege` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '权限',
   `register_time` int(10) unsigned NOT NULL COMMENT '账号注册时间戳',
   `login_time` int(10) unsigned NOT NULL COMMENT '账号最后一次登录时间',
@@ -32,7 +32,7 @@ CREATE TABLE `tbl_project` (
   `op_uid` int(10) unsigned NOT NULL COMMENT '最后操作这条记录的用户',
   PRIMARY KEY  (`id`),
   KEY `key_t_s` (`type`, `status`),
-  KEY `key_uid` (`uid`)
+  KEY `key_uid` (`create_uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT='项目表';
 
 DROP TABLE IF EXISTS `tbl_feature`;
@@ -60,7 +60,7 @@ CREATE TABLE `tbl_story` (
   `begin_time` int(10) unsigned NOT NULL COMMENT 'story计划开始的时间戳',
   `end_time` int(10) unsigned NOT NULL COMMENT 'story计划结束的时间戳',
   `create_uid` int(10) unsigned NOT NULL COMMENT '创建者的uid',
-  `owner_uids` varchar(1024) unsigned NOT NULL COMMENT '负责人的uid集合，用_连接多个uid',
+  `owner_uids` varchar(1024) NOT NULL COMMENT '负责人的uid集合，用_连接多个uid',
   `floor_count` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '该story下讨论版包含的评论个数，包括已经删除的，可以用来分配floor',
   `discuss_count` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '去掉已删除的讨论后的评论总数',
   `op_time` int(10) unsigned NOT NULL COMMENT '最后操作时间，修改、删除的时间',
@@ -75,13 +75,13 @@ CREATE TABLE `tbl_discuss` (
   `story_id` int(10) unsigned NOT NULL COMMENT '所属的某个story的id',
   `uid` int(10) unsigned NOT NULL COMMENT '发贴者的uid',
   `create_time` int(10) unsigned NOT NULL COMMENT '发贴时间',
-  `content` varchar(32768) NOT NULL DEFAULT '' COMMENT '发贴内容，允许img标签，富文本',
+  `content` varchar(8192) NOT NULL DEFAULT '' COMMENT '发贴内容，允许img标签，富文本',
   `floor` int(10) unsigned NOT NULL COMMENT '楼层数',
   `deleted` int(4) unsigned NOT NULL DEFAULT 0 COMMENT '是否删除标记',
   `to_discuss_id` int(10) unsigned NOT NULL DEFAULT 0 COMMENT '回复的楼层id',
   `op_time` int(10) unsigned NOT NULL COMMENT '最后操作时间，修改、删除的时间',
   `op_uid` int(10) unsigned NOT NULL COMMENT '最后操作这条记录的用户',
   PRIMARY KEY  (`id`),
-  KEY `key_s_d_c` (`story_id`, `deleted`, `create_time`),
+  KEY `key_s_d_c` (`story_id`, `deleted`, `create_time`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT='讨论表';
 
