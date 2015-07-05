@@ -9,8 +9,8 @@ class ControllerBase extends Controller
     {
         $this->result = array('errno'  => 0,
                               'errmsg' => 'successful');
-        // 暂时先不用，后续会迁移过来。
-        //$this->initRequestParams();
+
+        $this->initRequestParams();
     }
 
     protected function forward($uri)
@@ -29,15 +29,15 @@ class ControllerBase extends Controller
     protected function initRequestParams() {
         $uri        = $this->request->getURI();
         $routerInfo = $this->getRouterInfo($uri);
+        $requestKey = $routerInfo['controller'] . '_' . $routerInfo['action'] . '_keys';
 
-        $uriKey     = $routerInfo['controller'] . '_' . $routerInfo['action'] . '_keys';
         $this->requestParams = array();
-        foreach ($this->uriParams[$uriKey] as $key=>$castFunction) {
+        foreach ($this->uriParams[$requestKey] as $key=>$castFunction) {
             $$key = $this->request->getPost($key);
             if (empty($$key)) {
                 $$key = $this->request->get($key);
             }  
-            $this->requestParams[$key] = $$key;
+            $this->requestParams[$key] = $castFunction($$key);
         }
     }
 
@@ -52,6 +52,15 @@ class ControllerBase extends Controller
         $arrURI = explode('?', $uri);
         $path   = $arrURI[0];
         $routerInfo = explode('/', $path);
+        if (empty($routerInfo[0])) {
+            $routerInfo[0] = 'board';
+        }
+        if (empty($routerInfo[1])) {
+            $routerInfo[0] = 'index';
+        }
+        if (empty($routerInfo[2])) {
+            $routerInfo[0] = 'index';
+        }
         
         return array('module'     => $routerInfo[0],
                      'controller' => $routerInfo[1],
@@ -62,14 +71,14 @@ class ControllerBase extends Controller
     protected $result        = array();
 
     // 用户注册接口需要的字段.后续会放到配置里。
-    private $uriParams  = array(
+    protected $uriParams  = array(
                                 'feature_new_keys' => 
                                         array('projectid' => 'intval',
                                                'content'   => 'strval',
                                                'uid'       => 'intval'),
                                 'user_register_keys' => 
                                         array('username'  => 'strval', 
-                                              'password'  => 'md5', 
+                                              'password'  => 'strval', 
                                               'nickname'  => 'strval', 
                                               'email'     => 'strval', 
                                               'role'      => 'intval',),);

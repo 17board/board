@@ -18,9 +18,22 @@ class User extends Model {
 	 * data:{username, password, nickname, email, role}
 	 */
 	public function registerUser($data) {
-		$this->uid = 12345;
+		$username   = $data['username'];
+		$userExist  = $this->find(array("columns" => 'uid', "username='${username}'"));
+		$userExist  = $userExist->toArray();
+		if (!empty($userExist)) {
+			return false;
+		}
+		
+		$currentUid = $this->find(array("columns" => 'uid', "order" => "id desc", "limit" => 1));
+		$currentUid = $currentUid->toArray();
+		$this->uid  = 1;
+		if (!empty($currentUid)) {
+			$this->uid = $currentUid[0]['uid'] + 1;
+		}
+
 		$this->username      = $data['username'];
-		$this->password      = $data['password'];
+		$this->password      = md5($data['password']);
 		$this->nickname      = $data['nickname'];
 		$this->email         = $data['email'];
 		$this->avatar        = "";
