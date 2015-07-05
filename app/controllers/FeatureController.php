@@ -30,24 +30,18 @@ class FeatureController extends ControllerBase
     }
 
     /**
-     * @brief: 初始化<fucntion>newAction</function>的请求参数.
+     * @brief: 初始化<fucntion>newAction</function>的请求参数。
+     *         之后会写成通用方法。
      */
     private function initNewParams() {
-    	$projectId = $this->request->getPost('projectid');
-     	$content   = $this->request->getPost('content');
-        $uid       = 12345;
-
-	    if (empty($projectID)) {
-	    	$projectId = $this->request->get('projectid');
-	    }
-	    if (empty($content)) {
-	    	$content   = $this->request->get('content');
-	    }
-
-	    $this->requestParams = array('projectid' => intval($projectId),
-	    							 'content'   => trim(strval($content)),
-	    							 'uid'       => intval($uid),
-	    					   );
+    	$this->requestParams = array();
+        foreach ($this->featureNewKeys as $key=>$castFunction) {
+            $$key = $this->request->getPost($key);
+            if (empty($$key)) {
+                $$key = $this->request->get($key);
+            }  
+            $this->requestParams[$key] = $$key;
+        }
     }
 
     /**
@@ -55,12 +49,21 @@ class FeatureController extends ControllerBase
      *         暂时先用这种方式，之后会改成throw exception的方式。
      */
     private function checkNewParams() {
-    	if (false) {
-    		$this->result['errno']  = 1;
-    		$this->result['errmsg'] = 'params error';
-    		return false;
-    	}
+    	foreach ($this->featureNewKeys as $key => $castFunction) {
+            if (empty($this->requestParams[$key])) {
+                $this->result['errno']  = 1;
+                $this->result['errmsg'] = 'params error:' . $key . ' invalidation';
+                return false;
+            }
 
-    	return true;
+            $this->requestParams[$key] = $castFunction($this->requestParams[$key]);
+        }
+        
+        return true;
     }
+
+    // 用户注册接口需要的字段.后续会放到配置里。
+    private $featureNewKeys = array('projectid' => 'intval',
+                                   'content'   => 'strval',
+                                   'uid'       => 'intval');
 }
