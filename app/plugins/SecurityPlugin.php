@@ -55,7 +55,7 @@ class SecurityPlugin extends Plugin
 				'index'      => array('index'),
 				'feature'    => array('index', 'new', 'save'),
 				'story'      => array('new'),
-				'user'       => array('register',),
+				'user'       => array('register', 'login', 'info', 'logout'),
 			);
 			foreach ($publicResources as $resource => $actions) {
 				$acl->addResource(new Resource($resource), $actions);

@@ -8,7 +8,8 @@ class ControllerBase extends Controller
     protected function initialize()
     {
         $this->result = array('errno'  => 0,
-                              'errmsg' => 'successful');
+                              'errmsg' => 'successful',
+                              'data'   => '');
 
         $this->initRequestParams();
     }
@@ -17,13 +18,13 @@ class ControllerBase extends Controller
     {
         $uriParts = explode('/', $uri);
         $params = array_slice($uriParts, 2);
-    	return $this->dispatcher->forward(
-    		array(
-    			'controller' => $uriParts[0],
-    			'action' => $uriParts[1],
-                'params' => $params
-    		)
-    	);
+    	  return $this->dispatcher->forward(
+    		    array(
+    			      'controller' => $uriParts[0],
+    			      'action'     => $uriParts[1],
+                'params'     => $params
+    		    )
+    	  );
     }
 
     protected function initRequestParams() {
@@ -32,6 +33,9 @@ class ControllerBase extends Controller
         $requestKey = $routerInfo['controller'] . '_' . $routerInfo['action'] . '_keys';
 
         $this->requestParams = array();
+        if (!isset($this->uriParams[$requestKey])) {
+            return;
+        }
         foreach ($this->uriParams[$requestKey] as $key=>$castFunction) {
             $$key = $this->request->getPost($key);
             if (empty($$key)) {
@@ -75,11 +79,16 @@ class ControllerBase extends Controller
                                 'feature_new_keys' => 
                                         array('projectid' => 'intval',
                                                'content'   => 'strval',
-                                               'uid'       => 'intval'),
+                                               'uid'       => 'intval',), // uid 之后要删除，从cookie中取。
                                 'user_register_keys' => 
                                         array('username'  => 'strval', 
                                               'password'  => 'strval', 
                                               'nickname'  => 'strval', 
                                               'email'     => 'strval', 
-                                              'role'      => 'intval',),);
+                                              'role'      => 'intval',),
+                                'user_login_keys' => 
+                                        array('username' => 'strval',
+                                              'password' => 'strval',
+                                              'remember' => 'intval',),
+                            );
 }
