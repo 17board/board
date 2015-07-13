@@ -12,6 +12,7 @@ class ControllerBase extends Controller
                               'data'   => '');
 
         $this->initRequestParams();
+        $this->userInfo = $this->session->get('auth');
     }
 
     protected function forward($uri)
@@ -78,8 +79,10 @@ class ControllerBase extends Controller
     protected $uriParams  = array(
                                 'feature_new_keys' => 
                                         array('projectid' => 'intval',
-                                               'content'   => 'strval',
-                                               'uid'       => 'intval',), // uid 之后要删除，从cookie中取。
+                                               'content'   => 'strval',),
+                                'feature_update_keys' => 
+                                        array('sort' => 'intval',
+                                              'content' => 'strval',), 
                                 'user_register_keys' => 
                                         array('username'  => 'strval', 
                                               'password'  => 'strval', 
@@ -91,4 +94,6 @@ class ControllerBase extends Controller
                                               'password' => 'strval',
                                               'remember' => 'intval',),
                             );
+  // 登录用户信息；
+  protected $userInfo = array();
 }

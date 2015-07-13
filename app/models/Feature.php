@@ -29,12 +29,24 @@ class Feature extends Model {
 		return $this->save();
 	}
 
-	private $project_id;
-	private $deleted;
-	private $sort;
-	private $content;
-	private $create_time;
-	private $create_uid;
-	private $op_time;
-	private $op_uid;
+	public function updateFeature($arrayInput) {
+		$id = $arrayInput['id'];
+		$feature = $this->findFirst("id=$id");
+
+		unset($arrayInput['id']);
+		foreach ($arrayInput as $key => $value) {
+			$feature->$key = $value;
+		}
+
+		return $feature->save();
+	}
+
+	public $project_id;
+	public $deleted;
+	public $sort;
+	public $content;
+	public $create_time;
+	public $create_uid;
+	public $op_time;
+	public $op_uid;
 }

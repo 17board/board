@@ -46,15 +46,15 @@ class User extends Model {
 		return $this->save();
 	}
 
-	private $uid;
-	private $username;
-	private $password;
-	private $nickname;
-	private $email;
-	private $avatar;
-	private $role;
-	private $privilege;
-	private $register_time;
-	private $login_time;
-	private $ip;
+	public $uid;
+	public $username;
+	public $password;
+	public $nickname;
+	public $email;
+	public $avatar;
+	public $role;
+	public $privilege;
+	public $register_time;
+	public $login_time;
+	public $ip;
 }
