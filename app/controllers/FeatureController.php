@@ -90,6 +90,45 @@ class FeatureController extends ControllerBase
         $this->view->disable();
     }
 
+    public function deleteAction($featureID) {
+        $featureID = intval($featureID);
+        if ($featureID <= 0) {
+            $this->result['errno'] = 1;
+            $this->result['errmsg'] = 'feature id dose not exist';
+            echo json_encode($this->result);
+            $this->view->disable();
+            return;
+        }
+
+        if (empty($this->userInfo || empty($this->userInfo['uid']))) {
+            $this->result['errno'] = 2;
+            $this->result['errmsg'] = 'user not login';
+            echo json_encode($this->result);
+            $this->view->disable();
+            return;
+        }
+
+        $featureModel = new Feature();
+        $feature = $featureModel->find(array("columns" => 'id', "id=$featureID"));
+        $feature = $feature->toArray();
+        if (empty($feature)) {
+            $this->result['errno'] = 3;
+            $this->result['errmsg'] = 'feature id does not exist';
+            echo json_encode($this->result);
+            $this->view->disable();
+            return;
+        }
+
+        $res = $featureModel->deleteFeature($featureID, $this->userInfo['uid']);
+        
+        if (!$res) {
+            $this->result['errno'] = 4;
+            $this->result['errmsg'] = '删除feature记录失败';
+        }
+        echo json_encode($this->result);
+        $this->view->disable();
+    }
+
     private function checkNewParams() {
     	foreach ($this->uriParams['feature_new_keys'] as $key => $castFunction) {
             if (empty($this->requestParams[$key])) {

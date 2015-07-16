@@ -41,6 +41,15 @@ class Feature extends Model {
 		return $feature->save();
 	}
 
+	public function deleteFeature($featureID, $op_uid) {
+		$feature = $this->findFirst("id=$featureID");
+		$feature->deleted = intval(1);
+		$feature->op_uid = intval($op_uid);
+		$feature->op_time = time();
+
+		return $feature->save();
+	}
+
 	public $project_id;
 	public $deleted;
 	public $sort;

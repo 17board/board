@@ -61,10 +61,10 @@ class ControllerBase extends Controller
             $routerInfo[0] = 'board';
         }
         if (empty($routerInfo[1])) {
-            $routerInfo[0] = 'index';
+            $routerInfo[1] = 'index';
         }
         if (empty($routerInfo[2])) {
-            $routerInfo[0] = 'index';
+            $routerInfo[2] = 'index';
         }
         
         return array('module'     => $routerInfo[0],
