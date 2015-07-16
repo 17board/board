@@ -53,7 +53,12 @@ class SecurityPlugin extends Plugin
 			//Public area resources
 			$publicResources = array(
 				'index'      => array('index'),
+<<<<<<< HEAD
 				'feature'    => array('index', 'new', 'save', 'update', 'delete'),
+=======
+				'discuss'      => array('index', 'new', 'list'),
+				'feature'    => array('index', 'new', 'save', 'update'),
+>>>>>>> ffbd23791c87901b814a239c1d9f9c7ebafaf1e5
 				'story'      => array('new'),
 				'user'       => array('register', 'login', 'info', 'logout'),
 			);
