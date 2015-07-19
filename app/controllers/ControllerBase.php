@@ -77,11 +77,18 @@ class ControllerBase extends Controller
 
     // 用户注册接口需要的字段.后续会放到配置里。
     protected $uriParams  = array(
+                                'project_new_keys' => 
+                                        array('name'   => 'strval',
+                                              'type'   => 'intval',
+                                              'member' => 'strval',),
+                                'project_update_keys' => 
+                                        array('createUid' => 'intval',
+                                              'member'    => 'strval',),
                                 'feature_new_keys' => 
-                                        array('projectid' => 'intval',
+                                        array('projectid'  => 'intval',
                                                'content'   => 'strval',),
                                 'feature_update_keys' => 
-                                        array('sort' => 'intval',
+                                        array('sort'    => 'intval',
                                               'content' => 'strval',), 
                                 'user_register_keys' => 
                                         array('username'  => 'strval', 

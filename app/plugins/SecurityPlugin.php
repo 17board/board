@@ -23,7 +23,6 @@ class SecurityPlugin extends Plugin
 	 */
 	public function getAcl()
 	{
-
 		//throw new \Exception("something");
 
 		if (!isset($this->persistent->acl)) {
@@ -43,6 +42,7 @@ class SecurityPlugin extends Plugin
 
 			//Private area resources
 			$privateResources = array(
+				'project'    => array('newProject', 'update'),
 				'feature'    => array('index', 'addNewFeature', 'save'),
 				'user'       => array('registerUser', 'save'),		
 			);
@@ -53,8 +53,9 @@ class SecurityPlugin extends Plugin
 			//Public area resources
 			$publicResources = array(
 				'index'      => array('index'),
+				'project'    => array('new', 'update', ),
 				'feature'    => array('index', 'new', 'save', 'update', 'delete'),
-				'discuss'      => array('index', 'new', 'list'),
+				'discuss'    => array('index', 'new', 'list'),
 				'story'      => array('new'),
 				'user'       => array('register', 'login', 'info', 'logout'),
 			);
@@ -93,7 +94,6 @@ class SecurityPlugin extends Plugin
 	 */
 	public function beforeDispatch(Event $event, Dispatcher $dispatcher)
 	{
-
 		$auth = $this->session->get('auth');
 		if (!$auth){
 			$role = 'Guests';
@@ -105,7 +105,6 @@ class SecurityPlugin extends Plugin
 	 	$action = $dispatcher->getActionName();
 
 	 	$acl = $this->getAcl();
-
 	 	$allowed = $acl->isAllowed($role, $controller, $action);
 		if ($allowed != Acl::ALLOW) {
 			$dispatcher->forward(array(
