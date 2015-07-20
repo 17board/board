@@ -21,6 +21,17 @@ class Project extends Model {
 		return $this->save();
 	}
 
+	public function updateProject($arrayInput) {
+		$id = $arrayInput['id'];
+		$project = $this->findFirst("id=$id");
+		unset($arrayInput['id']);
+		foreach ($arrayInput as $key => $value) {
+			$project->$key = $value;
+		}
+
+		return $project->save();
+	}
+
 	public $id;
 	public $name;
 	public $type;

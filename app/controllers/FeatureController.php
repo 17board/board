@@ -15,7 +15,7 @@ class FeatureController extends ControllerBase
     		return;
     	}
 
-        if (empty($this->userInfo || empty($this->userInfo['uid']))) {
+        if (empty($this->userInfo) || empty($this->userInfo['uid'])) {
             $this->result['errno'] = 2;
             $this->result['errmsg'] = 'user not login';
             echo json_encode($this->result);
@@ -46,7 +46,7 @@ class FeatureController extends ControllerBase
             return;
         }
 
-        if (empty($this->userInfo || empty($this->userInfo['uid']))) {
+        if (empty($this->userInfo) || empty($this->userInfo['uid'])) {
             $this->result['errno'] = 2;
             $this->result['errmsg'] = 'user not login';
             echo json_encode($this->result);
@@ -100,7 +100,7 @@ class FeatureController extends ControllerBase
             return;
         }
 
-        if (empty($this->userInfo || empty($this->userInfo['uid']))) {
+        if (empty($this->userInfo) || empty($this->userInfo['uid'])) {
             $this->result['errno'] = 2;
             $this->result['errmsg'] = 'user not login';
             echo json_encode($this->result);
