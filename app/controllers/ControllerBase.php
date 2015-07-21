@@ -14,7 +14,7 @@ class ControllerBase extends Controller
         $this->initRequestParams();
         $this->userInfo = $this->session->get('auth');
     }
-
+    
     protected function forward($uri)
     {
         $uriParts = explode('/', $uri);
@@ -73,7 +73,7 @@ class ControllerBase extends Controller
     }
 
     protected $requestParams = array();
-    protected $result        = array();
+    public $result        = array();
 
     // 用户注册接口需要的字段.后续会放到配置里。
     protected $uriParams  = array(

@@ -6,18 +6,10 @@ class ProjectController extends ControllerBase {
 	}
 
 	public function newAction() {
-		if (!$this->checkNewParams()) {
-    		echo json_encode($this->result);
-    		$this->view->disable();
-    		return;
-    	}
+		$this->checkNewParams();
 
         if (empty($this->userInfo) || empty($this->userInfo['uid'])) {
-            $this->result['errno'] = 2;
-            $this->result['errmsg'] = 'user not login';
-            echo json_encode($this->result);
-            $this->view->disable();
-            return;
+            throw new BoardException(ExceptionCodes::USER_NOT_LOGIN, $this);
         }
 
         $porjectModel = new Project();
@@ -84,9 +76,10 @@ class ProjectController extends ControllerBase {
 			}
 
 			if (empty($this->requestParams[$key])) {
-                $this->result['errno']  = 1;
-                $this->result['errmsg'] = 'params error:' . $key . ' invalidation';
-                return false;
+                // $this->result['errno']  = 1;
+                // $this->result['errmsg'] = 'params error:' . $key . ' invalidation';
+                // return false;
+                throw new BoardException(ExceptionCodes::PARAM_ERROR, $this, $key . ' invalidation');
             }
 		}
 

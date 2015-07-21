@@ -93,7 +93,7 @@ class SecurityPlugin extends Plugin
 	 * @param Dispatcher $dispatcher
 	 */
 	public function beforeDispatch(Event $event, Dispatcher $dispatcher)
-	{
+	{	
 		$auth = $this->session->get('auth');
 		if (!$auth){
 			$role = 'Guests';
@@ -106,12 +106,16 @@ class SecurityPlugin extends Plugin
 
 	 	$acl = $this->getAcl();
 	 	$allowed = $acl->isAllowed($role, $controller, $action);
+	 	
 		if ($allowed != Acl::ALLOW) {
-			$dispatcher->forward(array(
-				'controller' => 'errors',
-				'action'     => 'show401'
-			));
-            $this->session->destroy();
+			// $dispatcher->forward(array(
+			// 	'controller' => 'errors',
+			// 	'action'     => 'show401'
+			// ));
+
+			if (empty($this->session)) {
+				$this->session->destroy();
+			}
 			return false;
 		}
 	}
