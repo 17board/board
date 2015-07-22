@@ -4,7 +4,32 @@ use Phalcon\Mvc\Controller;
 
 class ControllerBase extends Controller
 {
+    public function setResultErrno($errno) {
+        $this->result['errno'] = $errno;
+    }
 
+    public function setResultErrmsg($errmsg) {
+        $this->result['errmsg'] = $errmsg;
+    }
+
+    public function setResultData($data) {
+        $this->result['data'] = $data;
+    }
+
+    public function setResult($errno, $errmsg, $data) {
+        $this->setResultErrno($errno);
+        $this->setResultErrmsg($errmsg);
+        $this->setResultData($data);
+    } 
+
+    public function getResult() {
+        return $this->result;
+    }
+    
+    public function setViewDisable() {
+        $this->view->disable();
+    } 
+       
     protected function initialize()
     {
         $this->result = array('errno'  => 0,
@@ -73,7 +98,7 @@ class ControllerBase extends Controller
     }
 
     protected $requestParams = array();
-    public $result        = array();
+    protected $result        = array();
 
     // 用户注册接口需要的字段.后续会放到配置里。
     protected $uriParams  = array(

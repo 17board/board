@@ -27,6 +27,8 @@ try {
 	$application = new Application($di);
 
 	echo $application->handle()->getContent();
+} catch (BoardException $e) {
+	echo $e->getMessage();
 } catch (Exception $e){
 	echo $e->getMessage();
 }
